@@ -5,6 +5,7 @@ import './Form.scss';
 const Form = (props) => {
   const [method, setMethod] = useState('GET');
   const [jsonData, setJsonData] = useState('');
+  const [url, setUrl] = useState('');
 
   const handleMethodClick = (e) => {
     setMethod(e.target.id);
@@ -14,12 +15,16 @@ const Form = (props) => {
     setJsonData(e.target.value);
   };
 
+  const handleChangeURL = (e) => {
+    setUrl(e.target.value)
+  }
+
   const handleSubmit = e => {
     e.preventDefault();
     const formData = {
       method: method,
-      url: 'https://pokeapi.co/api/v2/pokemon',
-      data: jsonData && (method === 'POST' || method === 'PUT') ? JSON.parse(jsonData) : null,
+      url: url,
+      body: jsonData ? JSON.parse(jsonData) :undefined
     };
     props.handleApiCall(formData);
   };
@@ -29,7 +34,7 @@ const Form = (props) => {
       <form onSubmit={handleSubmit}>
         <label>
           <span>URL: </span>
-          <input name='url' type='text' />
+          <input name='url' type='text' onChange = {handleChangeURL} />
           <button type="submit">GO!</button>
         </label>
         <div className="methods">

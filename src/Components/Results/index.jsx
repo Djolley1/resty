@@ -2,12 +2,24 @@
 import React from 'react';
 import './Results.scss';
 
-const Results = (props) => {
+const Results = ({ data, headers, loading }) => {
   return (
     <section>
-      <pre>{props.data ? JSON.stringify(props.data, undefined, 2) : null}</pre>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <div>
+            <h3>Response Headers:</h3>
+              {headers && JSON.stringify(headers, null, 2)}
+          </div>
+          <div>
+            <h3>Response Data:</h3>
+              {data && JSON.stringify(data, null, 2)}
+          </div>
+        </>
+      )}
     </section>
   );
-}
-
+};
 export default Results;
